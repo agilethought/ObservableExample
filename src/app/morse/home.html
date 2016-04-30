@@ -1,0 +1,46 @@
+﻿<div style="margin-left: 100px;">
+
+    <h3 [style.color]="'blue'">Mike's Morse Code</h3>
+
+
+    <img src="assets/img/tapper.jpg"
+         class="img"
+         (mousedown)="catchDown($event)"
+         (mouseup)="catchUp($event)">
+    <h1 style="margin-left: 200px;">{{morse}}</h1>
+    <h2>{{word}}</h2>
+    <button (click)="clear()">Clear</button>
+    <button (click)="backup()">Back One</button>
+
+    <form style="margin-top: 25px;padding: 5px;">
+        <b>Morse Adjustments</b>
+        <table style=" border-collapse: collapse;padding: 10px">
+            <tr>
+                <td>Dit rate (ms)</td>
+                <td>
+                    <input type="number"
+                           [(ngModel)]="rates.ditRate"
+                           (ngControl)="rateControl.ditRate">
+                </td>
+            </tr>
+            <tr>
+                <td>Letter Pause (ms)</td>
+                <td>
+                    <input type="number"
+                           [(ngModel)]="rates.letterPause"
+                           (ngControl)="rateControl.letterPause">
+                </td>
+            </tr>
+            <tr>
+                <td>Word Pause (ms)</td>
+                <td>
+                    <input type="number"
+                           [(ngModel)]="rates.wordPause"
+                           (ngControl)="rateControl.wordPause">
+                </td>
+
+            </tr>
+
+        </table>
+    </form>
+</div>

@@ -7,6 +7,7 @@ import {RouteConfig, Router} from 'angular2/router';
 import {Home} from './home';
 import {AppState} from './app.service';
 import {RouterActive} from './router-active';
+import Morse from './morse/morse.component';
 
 /*
  * App Component
@@ -73,12 +74,13 @@ import {RouterActive} from './router-active';
 @RouteConfig([
   { path: '/',      name: 'Index', component: Home, useAsDefault: true },
   { path: '/home',  name: 'Home',  component: Home },
+  {path: '/morse', name: 'Morse', component: Morse},
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
   { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
 ])
 export class App {
   angularclassLogo = 'assets/img/angularclass-avatar.png';
-  name = 'Angular 2 Webpack Starter';
+  name = 'Morse Code';
   url = 'https://twitter.com/AngularClass';
 
   constructor(public appState: AppState) {}
