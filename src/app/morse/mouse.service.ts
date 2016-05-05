@@ -35,20 +35,20 @@ export class MouseService {
         let letterBoundaries = mouseSignals.debounceTime(this.rates.letterPause);
         let wordBoundaries = mouseSignals.debounceTime(this.rates.wordPause);
 
-        let letters = mouseSignals
-                        .window(letterBoundaries)
-                        .flatMap(x => x.toArray())
-                        .map(letterArray => {
-                            return letterArray.map(l => l === DitDash.dit ? '.' : '-').join('');
-                        });
+        let morseLetters = mouseSignals
+                            .window(letterBoundaries)
+                            .flatMap(x => x.toArray())
+                            .map(letterArray => {
+                                return letterArray.map(l => l === DitDash.dit ? '.' : '-').join('');
+                            });
+        let convertedLetters = morseLetters.map(code => MorseLookup.look(code));
 
-        let convertedLetters = letters.map(code => MorseLookup.look(code));
         let words = convertedLetters
                         .window(wordBoundaries)
                         .flatMap(x => x.toArray())
                         .map(letterArray => letterArray.join(''));
 
-        letters.subscribe(this.morseList);
+        morseLetters.subscribe(this.morseList);
         convertedLetters.subscribe(this.letters);
         wordBoundaries.map((wb) => ' ').subscribe(this.letters);
 
@@ -56,7 +56,7 @@ export class MouseService {
         if (debugging) {
             letterBoundaries.subscribe((wb) => { console.log('--- Letter Boundary ---'); });
             wordBoundaries.subscribe((wb) => { console.log('--- Word Boundary ---'); });
-            letters.subscribe((letterGroup) => { console.log('Read morse letter:', letterGroup); });
+            morseLetters.subscribe((letterGroup) => { console.log('Read morse letter:', letterGroup); });
             convertedLetters.subscribe((convertedLetters) => { console.log('Read converted letter:', convertedLetters); });
             words.subscribe((watch) => { console.log('Read word:', watch); });
         }
