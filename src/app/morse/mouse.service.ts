@@ -24,13 +24,11 @@ export class MouseService {
     constructor() {
         this.rates = Rates.getInstance();
 
-        let timeStampedMouseSignals = this.newMice.map(v => ({ value: v, timestamp: Date.now() }));
-
-        let mouseDowns = timeStampedMouseSignals.filter(s => (s.value.direction === MouseDirection.down));
-        let mouseUps = timeStampedMouseSignals.filter(s => (s.value.direction === MouseDirection.up));
+        let mouseDowns = this.newMice.filter(s => (s.direction === MouseDirection.down));
+        let mouseUps = this.newMice.filter(s => (s.direction === MouseDirection.up));
 
         let mouseSignals = mouseUps.withLatestFrom(mouseDowns, (up, down) => {
-            let duration = up.timestamp - down.timestamp;
+            let duration = up.stamp - down.stamp;
             return (duration < this.rates.ditRate) ? DitDash.dit : DitDash.dash;
         });
 

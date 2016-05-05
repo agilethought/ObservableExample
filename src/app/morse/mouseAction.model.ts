@@ -5,7 +5,14 @@ import {Inject} from 'angular2/core';
  */
 
 export class MouseAction {
+    private _stamp: number;
+
+    get stamp() : number {
+        return this._stamp;
+    }
+
     constructor(public direction: MouseDirection) {
+        this._stamp = new Date().valueOf();
     }
 }
 
